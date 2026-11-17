@@ -271,6 +271,8 @@
     #storyCanvas {
       width: 100%; height: 100%; display: block;
       filter: brightness(.88) saturate(1.08) contrast(1.02);
+      will-change: contents;
+      transform: translateZ(0);
     }
     #storyVideo {
       position: absolute; width: 1px; height: 1px; opacity: 0;
@@ -414,7 +416,7 @@
     /* —— KAYAKING (cinematic editorial) —— */
     .kayak-sec {
       position: relative;
-      height: 220vh;
+      height: 280vh;
       background: #0A1610;
     }
     .kayak-sticky {
@@ -430,22 +432,27 @@
     }
     .kayak-media img {
       width: 100%; height: 100%; object-fit: cover;
+      object-position: center center;
       transform: scale(1.18);
-      filter: saturate(1.05) contrast(1.04);
+      filter: saturate(1.08) contrast(1.05) brightness(.92);
       will-change: transform;
     }
     .kayak-overlay {
       position: absolute; inset: 0; z-index: 2;
       display: grid;
-      grid-template-rows: 1fr auto;
+      grid-template-rows: auto 1fr auto;
       padding:
-        calc(var(--nav-h) + 1.5rem)
+        calc(var(--nav-h) + 1.25rem)
         clamp(1.25rem, 5vw, 4rem)
         clamp(1.75rem, 5vh, 3rem);
       background:
-        linear-gradient(105deg, rgba(10,22,16,.82) 0%, rgba(10,22,16,.35) 42%, rgba(10,22,16,.08) 68%),
-        linear-gradient(180deg, rgba(10,22,16,.5) 0%, transparent 28%, transparent 52%, rgba(10,22,16,.78) 100%);
+        linear-gradient(105deg, rgba(10,22,16,.88) 0%, rgba(10,22,16,.42) 40%, rgba(10,22,16,.12) 66%, rgba(10,22,16,.35) 100%),
+        linear-gradient(180deg, rgba(10,22,16,.55) 0%, transparent 26%, transparent 48%, rgba(10,22,16,.82) 100%);
       pointer-events: none;
+    }
+    .kayak-overlay a,
+    .kayak-overlay button {
+      pointer-events: auto;
     }
     .kayak-overlay-top {
       display: flex;
@@ -462,20 +469,36 @@
       letter-spacing: -.04em;
       user-select: none;
     }
-    .kayak-coords {
+    .kayak-top-right {
       text-align: right;
+      display: grid;
+      gap: .85rem;
+      justify-items: end;
+    }
+    .kayak-scroll-hint {
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(248,249,250,.55);
+      font-weight: 600;
+    }
+    .kayak-coords {
       font-size: .65rem;
       letter-spacing: .2em;
       text-transform: uppercase;
       color: rgba(233,216,166,.75);
       line-height: 1.7;
     }
+    .kayak-overlay-mid {
+      display: grid;
+      align-content: end;
+      gap: 1.35rem;
+      max-width: min(760px, 94vw);
+      padding-bottom: .5rem;
+    }
     .kayak-overlay-main {
-      max-width: min(720px, 92vw);
       display: grid;
       gap: .85rem;
-      align-content: end;
-      padding-bottom: .25rem;
     }
     .kayak-kicker {
       display: inline-flex;
@@ -521,7 +544,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: .65rem .9rem;
-      margin-top: .55rem;
+      margin-top: .35rem;
       list-style: none;
       padding: 0;
     }
@@ -534,6 +557,88 @@
       padding: .45rem .8rem;
       backdrop-filter: blur(6px);
       background: rgba(10,22,16,.25);
+    }
+    .kayak-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .75rem 1.25rem;
+      max-width: 34rem;
+      padding-top: .35rem;
+      border-top: 1px solid rgba(248,249,250,.16);
+    }
+    .kayak-facts div {
+      min-width: 0;
+    }
+    .kayak-facts small {
+      display: block;
+      font-size: .58rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 700;
+      margin-bottom: .3rem;
+    }
+    .kayak-facts strong {
+      font-family: var(--font-serif);
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.15;
+    }
+    .kayak-extras {
+      display: grid;
+      gap: .85rem;
+      max-width: 36rem;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .kayak-includes {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: .45rem;
+    }
+    .kayak-includes li {
+      position: relative;
+      padding-left: 1.15rem;
+      color: rgba(248,249,250,.82);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+    .kayak-includes li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .55em;
+      width: .45rem;
+      height: 1px;
+      background: var(--amber);
+    }
+    .kayak-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      align-items: center;
+      margin-top: .15rem;
+    }
+    .kayak-actions .btn {
+      padding: .75rem 1.2rem;
+      font-size: .7rem;
+    }
+    .kayak-link {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(248,249,250,.78);
+      border-bottom: 1px solid rgba(248,249,250,.35);
+      padding-bottom: .15rem;
+      transition: color .3s, border-color .3s;
+    }
+    .kayak-link:hover {
+      color: var(--amber);
+      border-color: var(--amber);
     }
     .kayak-progress {
       position: absolute;
@@ -551,15 +656,18 @@
       background: linear-gradient(90deg, var(--amber), var(--sand));
     }
     @media (max-width: 760px) {
-      .kayak-sec { height: 180vh; }
+      .kayak-sec { height: 240vh; }
       .kayak-overlay {
-        padding-bottom: 5.5rem;
+        padding-bottom: 5.75rem;
       }
       .kayak-overlay-main h2 .soft {
         color: rgba(248,249,250,.78);
         -webkit-text-stroke: 0;
       }
       .kayak-coords { display: none; }
+      .kayak-facts { grid-template-columns: 1fr 1fr; }
+      .kayak-facts div:last-child { grid-column: 1 / -1; }
+      .kayak-media img { object-position: center 40%; }
     }
 
     /* —— ACTIVITIES —— */
@@ -1390,7 +1498,7 @@
       <div class="hero-sticky">
         <div class="hero-stage">
           <canvas id="storyCanvas" aria-hidden="true"></canvas>
-          <video id="storyVideo" muted playsinline preload="auto"
+          <video id="storyVideo" muted playsinline preload="none"
             poster="https://cdn.storebox.ai/media/1cb689ae-67af-4056-8356-4c4e9e9efc90/86a4ce32-c758-4a95-8d46-0cfc92468903/hero-water.jpg">
             <source src="assets/hero-boat.mp4" type="video/mp4" />
           </video>
@@ -1502,25 +1610,58 @@
     <section class="kayak-sec" id="journey" aria-label="Adventure journey">
       <div class="kayak-sticky">
         <div class="kayak-media" id="kayakMedia">
-          <img id="kayakImg" src="https://cdn.storebox.ai/media/1cb689ae-67af-4056-8356-4c4e9e9efc90/1a8668af-ddb0-4adc-a577-62bb769951ab/seq-kayak.jpg" alt="Kayaking Chilika" loading="lazy" width="1600" height="1068" />
+          <img id="kayakImg" src="https://cdn.storebox.ai/media/1cb689ae-67af-4056-8356-4c4e9e9efc90/c5b8eaf8-6bd4-42b8-8199-b633298096dd/act-kayak.jpg" alt="Kayaking Chilika waterways" width="1600" height="1068" />
         </div>
         <div class="kayak-overlay">
           <div class="kayak-overlay-top">
             <div class="kayak-index" aria-hidden="true">01</div>
-            <p class="kayak-coords">Chilika Lake<br />Odisha · India</p>
+            <div class="kayak-top-right">
+              <p class="kayak-scroll-hint">Scroll — Next</p>
+              <p class="kayak-coords">Chilika Lake<br />Odisha · India</p>
+            </div>
           </div>
-          <div class="kayak-overlay-main">
-            <p class="kayak-kicker">The Journey</p>
-            <h2>
-              <span class="line">Kayaking</span>
-              <span class="line soft">Chilika</span>
-            </h2>
-            <p class="kayak-lede">Paddle calm backwaters and river bends around Cuttack &amp; Chilika as the day opens wide.</p>
-            <ul class="kayak-meta">
-              <li>Chilika</li>
-              <li>Cuttack</li>
-              <li>Bhubaneswar</li>
-            </ul>
+          <div class="kayak-overlay-mid">
+            <div class="kayak-overlay-main">
+              <p class="kayak-kicker">The Journey</p>
+              <h2>
+                <span class="line">Kayaking</span>
+                <span class="line soft">Chilika</span>
+              </h2>
+              <p class="kayak-lede">Paddle calm backwaters and river bends around Cuttack &amp; Chilika as the day opens wide.</p>
+              <ul class="kayak-meta">
+                <li>Chilika</li>
+                <li>Cuttack</li>
+                <li>Bhubaneswar</li>
+              </ul>
+              <div class="kayak-facts" aria-label="Kayak session details">
+                <div>
+                  <small>Duration</small>
+                  <strong>2–3 hours</strong>
+                </div>
+                <div>
+                  <small>From</small>
+                  <strong>₹800 / person</strong>
+                </div>
+                <div>
+                  <small>Level</small>
+                  <strong>Beginner friendly</strong>
+                </div>
+              </div>
+            </div>
+            <div class="kayak-extras" id="kayakExtras">
+              <ul class="kayak-includes">
+                <li>Guided paddle with life jackets &amp; brief</li>
+                <li>Calm morning &amp; day slots on Chilika corridors</li>
+                <li>Pair with climb, skywalk, or Godibari camp</li>
+              </ul>
+              <div class="kayak-actions">
+                <a class="btn btn-wa magnetic" data-cursor="hover" target="_blank" rel="noopener noreferrer"
+                   href="https://wa.me/917008173767?text=Hi%20Odisha%20Maritime!%20I%27d%20like%20to%20book%20a%20Kayak%20Day%20Pass.">
+                  Book Kayak Day
+                </a>
+                <a class="kayak-link" href="#enquiry" data-cursor="hover">Full enquiry →</a>
+              </div>
+            </div>
           </div>
           <div class="kayak-progress" aria-hidden="true"><i id="kayakProgress"></i></div>
         </div>
@@ -2035,132 +2176,185 @@
 
       gsap.registerPlugin(ScrollTrigger, Draggable);
 
-      /* —— Lenis —— */
+      /* —— Lenis (document smooth scroll — drives hero scrub) —— */
       let lenis;
       if (!reduceMotion && typeof Lenis !== 'undefined') {
         lenis = new Lenis({
-          duration: 1.15,
+          duration: 1.35,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          smoothWheel: true
+          smoothWheel: true,
+          smoothTouch: false,
+          syncTouch: true,
+          syncTouchLerp: 0.075,
+          touchMultiplier: 1.15,
+          wheelMultiplier: 0.82,
+          autoRaf: false
         });
+        // Single loop: GSAP ticker drives Lenis; Lenis notifies ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
+        document.documentElement.classList.add('lenis', 'lenis-smooth');
       }
 
-      /* —— Hero: boat video frame scrub (no activity captions) —— */
+      /* —— Hero: preloaded JPEG sequence scrub (smooth, no video seeking) —— */
       const PAGE_TOTAL = 4;
+      const FRAME_COUNT = 89;
+      const FRAME_PATH = (i) => `assets/hero-frames/f-${String(i).padStart(3, '0')}.jpg`;
       const canvas = document.getElementById('storyCanvas');
       const video = document.getElementById('storyVideo');
-      const ctx = canvas.getContext('2d', { alpha: false });
+      const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true }) || canvas.getContext('2d', { alpha: false });
       const pagerLabel = document.getElementById('heroPagerLabel');
       const pagerFill = document.getElementById('heroPagerFill');
       const heroCenterInner = document.getElementById('heroCenterInner');
 
       let drawW = 0, drawH = 0;
-      let videoReady = false;
-      let targetTime = 0;
-      let seeking = false;
+      let framesReady = false;
+      let heroBooted = false;
+      let lastFrame = -1;
+      let lastPagerKey = '';
+      let heroProgressTarget = 0;
+      let heroProgressCurrent = 0;
+      let heroInView = false;
+      const frames = new Array(FRAME_COUNT);
+      const HERO_LERP = 0.16;
 
       function resizeCanvas() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dpr = Math.min(window.devicePixelRatio || 1, isNarrow() ? 1.25 : 1.5);
         const rect = canvas.getBoundingClientRect();
-        drawW = Math.max(1, Math.floor(rect.width * dpr));
-        drawH = Math.max(1, Math.floor(rect.height * dpr));
+        const nextW = Math.max(1, Math.floor(rect.width * dpr));
+        const nextH = Math.max(1, Math.floor(rect.height * dpr));
+        if (nextW === drawW && nextH === drawH) return;
+        drawW = nextW;
+        drawH = nextH;
         canvas.width = drawW;
         canvas.height = drawH;
-        drawVideoFrame();
+        if (lastFrame >= 0) drawFrame(lastFrame, true);
       }
 
-      function drawVideoFrame() {
-        if (!drawW || !drawH) return;
-        ctx.fillStyle = '#06140f';
-        ctx.fillRect(0, 0, drawW, drawH);
-        if (!videoReady || video.readyState < 2) return;
-        const iw = video.videoWidth || 1920;
-        const ih = video.videoHeight || 1080;
-        const cover = Math.max(drawW / iw, drawH / ih) * 1.02;
+      function paintCover(img) {
+        if (!img || !drawW || !drawH) return;
+        const iw = img.naturalWidth || img.width || 960;
+        const ih = img.naturalHeight || img.height || 540;
+        const cover = Math.max(drawW / iw, drawH / ih);
         const dw = iw * cover;
         const dh = ih * cover;
         const dx = (drawW - dw) * 0.5;
         const dy = (drawH - dh) * 0.5;
-        ctx.drawImage(video, dx, dy, dw, dh);
+        ctx.fillStyle = '#06140f';
+        ctx.fillRect(0, 0, drawW, drawH);
+        ctx.drawImage(img, dx, dy, dw, dh);
+      }
+
+      function drawFrame(index, force) {
+        const i = gsap.utils.clamp(0, FRAME_COUNT - 1, index | 0);
+        if (!force && i === lastFrame) return;
+        const img = frames[i];
+        if (!img || !img.complete) return;
+        lastFrame = i;
+        paintCover(img);
       }
 
       function updatePager(progress) {
         const p = gsap.utils.clamp(0, 1, progress);
         const page = Math.min(PAGE_TOTAL, Math.max(1, Math.ceil(p * PAGE_TOTAL) || 1));
+        const key = page + ':' + Math.round(p * 200);
+        if (key === lastPagerKey) return;
+        lastPagerKey = key;
         pagerLabel.textContent = String(page).padStart(2, '0') + ' / ' + String(PAGE_TOTAL).padStart(2, '0');
         pagerFill.style.width = (p * 100) + '%';
       }
 
-      function seekVideo(time) {
-        if (!videoReady) return;
-        const dur = video.duration || 1;
-        const t = Math.min(Math.max(time, 0.001), Math.max(dur - 0.05, 0.001));
-        targetTime = t;
-        if (seeking) return;
-        if (Math.abs(video.currentTime - t) < 0.02) {
-          drawVideoFrame();
-          return;
-        }
-        seeking = true;
-        try { video.currentTime = t; } catch (_) { seeking = false; }
-      }
-
-      video.addEventListener('seeked', () => {
-        drawVideoFrame();
-        if (Math.abs(video.currentTime - targetTime) > 0.04) {
-          try { video.currentTime = targetTime; } catch (_) { seeking = false; }
-        } else {
-          seeking = false;
-        }
-      });
-
       function scrubToProgress(progress) {
         const p = gsap.utils.clamp(0, 1, progress);
         updatePager(p);
-        if (!videoReady) return;
-        seekVideo(p * (video.duration || 1));
+        if (!framesReady) return;
+        drawFrame(Math.round(p * (FRAME_COUNT - 1)));
+      }
+
+      function setHeroProgress(progress) {
+        heroProgressTarget = gsap.utils.clamp(0, 1, progress);
+        // Keep Lenis feel snappy at the ends so scrub doesn't lag behind
+        if (heroProgressTarget <= 0.002 || heroProgressTarget >= 0.998) {
+          heroProgressCurrent = heroProgressTarget;
+          scrubToProgress(heroProgressCurrent);
+        }
+      }
+
+      // Lenis-smoothed scroll → lerped frame index on the same ticker
+      if (!reduceMotion) {
+        gsap.ticker.add(() => {
+          if (!framesReady || !heroInView) return;
+          const delta = heroProgressTarget - heroProgressCurrent;
+          if (Math.abs(delta) < 0.00035) {
+            if (heroProgressCurrent !== heroProgressTarget) {
+              heroProgressCurrent = heroProgressTarget;
+              scrubToProgress(heroProgressCurrent);
+            }
+            return;
+          }
+          heroProgressCurrent += delta * HERO_LERP;
+          scrubToProgress(heroProgressCurrent);
+        });
       }
 
       const loader = document.getElementById('loader');
       const loaderBar = document.getElementById('loaderBar');
 
       function finishHeroLoad() {
-        videoReady = true;
+        if (heroBooted) return;
+        heroBooted = true;
+        framesReady = true;
         resizeCanvas();
-        try { video.currentTime = 0.01; } catch (_) {}
-        drawVideoFrame();
+        drawFrame(0, true);
         updatePager(0);
-        gsap.to(loaderBar, { width: '100%', duration: 0.25, onComplete: () => {
+        gsap.to(loaderBar, { width: '100%', duration: 0.22, onComplete: () => {
           loader.classList.add('is-done');
-          gsap.to(heroCenterInner, { opacity: 1, y: 0, duration: 1.05, ease: 'power3.out', delay: 0.12 });
+          gsap.to(heroCenterInner, { opacity: 1, y: 0, duration: 1.05, ease: 'power3.out', delay: 0.1 });
           ScrollTrigger.refresh();
         }});
       }
 
-      function trackBuffer() {
-        if (!video.buffered.length || !video.duration) return;
-        const end = video.buffered.end(video.buffered.length - 1);
-        loaderBar.style.width = Math.min(96, Math.round((end / video.duration) * 100)) + '%';
+      function loadHeroFrames() {
+        let loaded = 0;
+        let failed = 0;
+        const total = FRAME_COUNT;
+        const bump = () => {
+          loaded += 1;
+          const pct = Math.round((loaded / total) * 100);
+          loaderBar.style.width = Math.min(98, pct) + '%';
+          if (loaded >= total) finishHeroLoad();
+        };
+
+        // Priority-load first frames for instant first paint, then the rest
+        for (let i = 1; i <= total; i++) {
+          const img = new Image();
+          img.decoding = 'async';
+          img.onload = bump;
+          img.onerror = () => { failed += 1; bump(); };
+          img.src = FRAME_PATH(i);
+          frames[i - 1] = img;
+        }
+
+        // Soft fallback: if images fail, try drawing video once
+        setTimeout(() => {
+          if (framesReady) return;
+          if (failed > total * 0.5 && video) {
+            video.addEventListener('loadeddata', () => {
+              try { video.currentTime = 0.05; } catch (_) {}
+              video.addEventListener('seeked', () => {
+                resizeCanvas();
+                paintCover(video);
+                framesReady = true;
+                finishHeroLoad();
+              }, { once: true });
+            }, { once: true });
+            video.load();
+          }
+        }, 6000);
       }
 
-      video.addEventListener('progress', trackBuffer);
-      video.addEventListener('loadedmetadata', () => { loaderBar.style.width = '40%'; });
-
-      const readyPromise = new Promise((resolve) => {
-        const done = () => resolve();
-        if (video.readyState >= 2) done();
-        else {
-          video.addEventListener('loadeddata', done, { once: true });
-          video.addEventListener('canplay', done, { once: true });
-          video.addEventListener('error', done, { once: true });
-          setTimeout(done, 8000);
-        }
-      });
-      readyPromise.then(finishHeroLoad);
-      video.load();
+      loadHeroFrames();
 
       window.addEventListener('resize', () => {
         clearTimeout(window.__heroResize);
@@ -2240,6 +2434,7 @@
         document.body.classList.remove('nav-locked');
         navToggle.setAttribute('aria-expanded', 'false');
         navToggle.setAttribute('aria-label', 'Open menu');
+        if (lenis) lenis.start();
       }
       function openNav() {
         navLinks.classList.add('is-open');
@@ -2248,6 +2443,7 @@
         document.body.classList.add('nav-locked');
         navToggle.setAttribute('aria-expanded', 'true');
         navToggle.setAttribute('aria-label', 'Close menu');
+        if (lenis) lenis.stop();
       }
       navToggle.addEventListener('click', () => {
         if (navLinks.classList.contains('is-open')) closeNav();
@@ -2264,8 +2460,15 @@
           const target = document.querySelector(id);
           if (!target) return;
           e.preventDefault();
-          if (lenis) lenis.scrollTo(target, { offset: -20 });
-          else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          if (lenis) {
+            lenis.scrollTo(target, {
+              offset: -20,
+              duration: 1.35,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
         });
       });
 
@@ -2277,17 +2480,25 @@
         onUpdate: (self) => { progress.style.width = (self.progress * 100) + '%'; }
       });
 
-      /* —— Hero video scrub trigger —— */
+      /* —— Hero frame scrub (Lenis scroll → lerped frames) —— */
       if (reduceMotion) {
         gsap.set(heroCenterInner, { opacity: 1, y: 0 });
         updatePager(0);
+        drawFrame(0, true);
       } else {
         ScrollTrigger.create({
           trigger: '#hero',
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.55,
-          onUpdate: (self) => { scrubToProgress(self.progress); }
+          scrub: true,
+          onToggle: (self) => {
+            heroInView = self.isActive;
+            // Slightly slower wheel through the frame scrub for smoother Lenis feel
+            if (lenis) {
+              lenis.options.wheelMultiplier = self.isActive ? 0.68 : 0.9;
+            }
+          },
+          onUpdate: (self) => { setHeroProgress(self.progress); }
         });
       }
 
@@ -2326,7 +2537,7 @@
         });
       }
 
-      /* —— Kayaking: sticky cinematic scrub —— */
+      /* —— Kayaking: sticky cinematic scrub + layered reveal —— */
       if (!reduceMotion) {
         gsap.fromTo('#kayakImg', { scale: 1.22, yPercent: 4 }, {
           scale: 1, yPercent: -3,
@@ -2338,9 +2549,30 @@
             scrub: true
           }
         });
-        gsap.from('.kayak-overlay-main > *', {
+        gsap.from('.kayak-overlay-main > *:not(.kayak-facts)', {
           y: 36, opacity: 0, stagger: 0.08, duration: 0.85, ease: 'power3.out',
           scrollTrigger: { trigger: '.kayak-sec', start: 'top 70%' }
+        });
+        gsap.from('.kayak-facts > div', {
+          y: 24, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.kayak-sec', start: 'top 55%' }
+        });
+        gsap.to('#kayakExtras', {
+          opacity: 1, y: 0, ease: 'none',
+          scrollTrigger: {
+            trigger: '.kayak-sec',
+            start: 'top top',
+            end: '+=45%',
+            scrub: true
+          }
+        });
+        gsap.from('.kayak-includes li', {
+          x: -18, opacity: 0, stagger: 0.08, duration: 0.55, ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.kayak-sec',
+            start: 'top -10%',
+            toggleActions: 'play none none reverse'
+          }
         });
         ScrollTrigger.create({
           trigger: '.kayak-sec',
@@ -2352,6 +2584,12 @@
             if (bar) bar.style.width = (self.progress * 100) + '%';
           }
         });
+      } else {
+        const extras = document.getElementById('kayakExtras');
+        if (extras) {
+          extras.style.opacity = '1';
+          extras.style.transform = 'none';
+        }
       }
 
       /* —— Activities drag + tilt —— */
